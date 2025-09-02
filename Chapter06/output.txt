@@ -1,0 +1,21 @@
+current_row: 0
+options: add new CD
+txt_ptr: add new CD
+current_row: 1
+options: find CD
+txt_ptr: find CD
+current_row: 2
+options: count CDs and tracks in the catalog
+txt_ptr: count CDs and tracks in the catalog
+current_row: 3
+options: list tracks on current CD
+txt_ptr: list tracks on current CD
+current_row: 4
+options: remove current CD
+txt_ptr: remove current CD
+current_row: 5
+options: update track information
+txt_ptr: update track information
+current_row: 6
+options: quit
+txt_ptr: quit
