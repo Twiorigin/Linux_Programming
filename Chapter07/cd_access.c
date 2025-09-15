@@ -112,4 +112,97 @@ cdt_entry get_cdt_entry(const char *cd_catalog_ptr, const int track_no)
 int add_cdc_entry(const cdc_entry entry_to_add)
 {
 	char key_to_add[CAT_CAT_LEN + 1];
+	datum local_data_datum;
+	datum local_key_datum;
+	int result;
+
+	/* Check whether the database is initialized and the parameters are valid */
+	if (!cdc_dbm_ptr || !cdt_dbm_ptr) return (0);
+	if (strlen(entry_to_add.catalog) >= CAT_CAT_LEN) return (0);
+
+	/* Make sure the search key contains only valid characters and null characters */
+	memset(&key_to_add, '\0', sizeof(key_to_add));
+	strcpy(key_to_add, entry_to_add.catalog);
+	
+	local_key_datum.dptr = (void *) key_to_add;
+	local_key_datum.dsize = sizeof(key_to_add);
+	local_data_datum.dptr = (void *) &entry_to_add;
+	local_data_datum.dsize = sizeof(entry_to_add);
+
+	result = dbm_store(cdc_dbm_ptr, local_key_datum, local_data_datum, DBM_REPLACE);
+
+	/* If dbm_store() returns 0, the operation was successful */
+	if (result == 0) return (1);
+	return(0);
+}
+
+int add_cdt_entry(const cdt_entry entry_to_add)
+{
+	char key_to_add[CAT_CAT_LEN + 10];
+	datum local_data_datum;
+	datum local_key_datum;
+	int result;
+	
+	if (!cdc_dbm_ptr || !cdt_dbm_ptr) return (0);
+	if (strlen(entry_to_add.catalog) >= CAT_CAT_LEN) return (0);
+	
+	memset(&key_to_add, '\0', sizeof(key_to_add));
+	sprintf(key_to_add, "%s %d", entry_to_add.catalog, entry_to_add.track_no);
+
+	local_key_datum.dptr = (void *) key_to_add;
+	local_key_datum.dsize = sizeof(key_to_add);
+	local_data_datum.dptr = (void *) &entry_to_add;
+	local_data_datum.dsize = sizeof(entry_to_add);
+
+	result = dbm_store(cdt_dbm_ptr, local_key_datum, local_data_datum, DBM_REPLACE);
+
+	/* dbm_store() returns 0 on success, non-zero on failure */
+	if (result == 0)
+		return (1);
+	return (0);
+}
+
+int del_cdc_entry(const char *cd_catalog_ptr)
+{
+	char key_to_del[CAT_CAT_LEN + 1];
+	datum local_key_datum;
+	int result;
+
+	if (!cdc_dbm_ptr || !cdt_dbm_ptr) return (0);
+	if (strlen(cd_catalog_ptr) >= CAT_CAT_LEN) return (0);
+	
+	memset(&key_to_del, '\0', sizeof(key_to_del));
+	strcpy(key_to_del, cd_catalog_ptr);
+
+	local_key_datum.dptr = (void *) key_to_del;
+	local_key_datum.dsize = sizeof(key_to_del);
+	result = dbm_delete(cdc_dbm_ptr, local_key_datum);
+
+	/* If dbm_store() returns 0, the operation was successful */
+	if (result == 0) return (1);
+	return (0);
+}
+
+int del_cdt_entry(const char *cd_catalog_ptr, const int track_no)
+{
+	char key_to_del[CAT_CAT_LEN + 10];
+	datum local_key_datum;
+	int result;
+
+	if (!cdc_dbm_ptr || !cdt_dbm_ptr) return (0);
+	if (strlen(cd_catalog_ptr) >= CAT_CAT_LEN) return (0);
+
+	memset(&key_to_del, '\0', sizeof(key_to_del));
+	sprintf(key_to_del, "%s %d", cd_catalog_ptr, track_no);
+
+	local_key_datum.dptr = (void *) key_to_del;
+	local_key_datum.dsize = sizeof(key_to_del);
+
+	result = dbm_delete(cdt_dbm_ptr, local_key_datum);
+
+	/* If dbm_store() returns 0, the operation was successful */
+	if (result == 0) return (1);
+	return (0);
+}
+
 
