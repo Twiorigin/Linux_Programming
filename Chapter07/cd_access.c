@@ -205,4 +205,46 @@ int del_cdt_entry(const char *cd_catalog_ptr, const int track_no)
 	return (0);
 }
 
+cdc_entry search_cdc_entry(const char *cd_catalog_ptr, int *first_call_ptr)
+{
+	static int local_first_call = 1;
+	cdc_entry entry_to_return;
+	datum local_data_datum;
+	static datum local_key_datum;
 
+	memset(&entry_to_return, '\0', sizeof(entry_to_return));
+
+	if (!cdc_dbm_ptr || !cdt_dbm_ptr) return (entry_to_return);
+	if (!cd_catalog_ptr || !first_call_ptr) return (entry_to_return);
+	if (strlen(cd_catalog_ptr) >= CAT_CAT_LEN) return (entry_to_return);
+
+	/* If first call *first_call_ptr is not true */
+	if (local_first_call) {
+		local_first_call = 0;
+		*fisrt_call_ptr = 1;
+	}
+	
+	if (*first_call_ptr) {
+		*first_call_ptr = 0;
+		local_key_datum = dbm_firstkey(cdc_dbm_ptr);
+	}
+	else {
+		local_key_datum = dbm_nextkey(cdc_dbm_ptr);
+	}
+
+	do {
+		if (local_key_datum.dptr != NULL) {
+			local_data_datum = dbm_fetch(cdc_dbm_ptr, local_key_datum);
+			if (local_data_datum.dptr) {
+				memcpy(&entry_to_return, (char *) local_data_datum.dptr, local_data_datum.dsize);
+				
+				if (!strstr(entry_to_return.catalog, cd_catalog_ptr))
+					{
+					memset(&entry_to_return, '\0', sizeof(entry_to_return));
+					local_key_datum = dbm_nextkey(cdc_dbm_ptr);
+				}
+			}
+		}
+	} while (local_key_datum.dptr && local_data_datum.dptr && (entry_to_return.catalog[0] == '\0'));
+	return (entry_to_return);
+} /* search_cdc_entry */
