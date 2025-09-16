@@ -19,7 +19,7 @@ typedef enum {
 	mo_del_tracks,
 	mo_count_entries,
 	mo_exit
-} menu_options
+} menu_options;
 
 static int command_mode(int argc, char *argv[]);
 static void announce(void);
@@ -29,7 +29,7 @@ static int enter_new_cat_entry(cdc_entry *entry_to_update);
 static void enter_new_track_entries(const cdc_entry *entry_to_add_to);
 static void del_cat_entry(const cdc_entry *entry_to_delete);
 static void del_track_entries(const cdc_entry *entry_to_delete);
-static void cdc_entry find_cat(void);
+static cdc_entry find_cat(void);
 static void list_tracks(const cdc_entry *entry_to_use);
 static void count_all_entries(void);
 static void display_cdc(const cdc_entry *cdc_to_show);
@@ -99,9 +99,9 @@ int main(int argc, char *argv[])
 	exit(EXIT_SUCCESS);
 } /* main */
  
-staic void announce(void)
+static void announce(void)
 {
-	printf("\n\nWelcome to the demonstration CD catalog database \ program\n");
+	printf("\n\nWelcome to the demonstration CD catalog database program\n");
 }
 
 static menu_options show_menu(const cdc_entry *cdc_selected)
@@ -113,9 +113,9 @@ static menu_options show_menu(const cdc_entry *cdc_selected)
 		if (cdc_selected->catalog[0]) {
 			printf("\n\nCurrent entry: ");
 			printf("%s, %s, %s, %s\n", cdc_selected->catalog,
-				cdc_seleted->title,
-				cdc_seleted->type,
-				cdc_seleted->artist);
+				cdc_selected->title,
+				cdc_selected->type,
+				cdc_selected->artist);
 
 			printf("\n");
 			printf("1 - add new CD\n");
@@ -221,7 +221,7 @@ static void enter_new_track_entries(const cdc_entry *entry_to_add_to)
 		memset(&new_track, '\0', sizeof(new_track));
 		existing_track = get_cdt_entry(entry_to_add_to->catalog, track_no);
 		if(existing_track.catalog[0]) {
-			printf("\tTrack %d: %s\n" track_no, existing_track.track_txt);
+			printf("\tTrack %d: %s\n", track_no, existing_track.track_txt);
 			printf("\tNew text: ");
 		}
 		else {
@@ -279,7 +279,7 @@ static void del_cat_entry(const cdc_entry *entry_to_delete)
 	}
 }
 
-static void del_track_entries(count cdc_entry *entry_to_delete)
+static void del_track_entries(const cdc_entry *entry_to_delete)
 {
 	int track_no = 1;
 	int delete_ok;
@@ -308,7 +308,7 @@ static cdc_entry find_cat(void)
 		fgets(tmp_str, TMP_STRING_LEN, stdin);
 		strip_return(tmp_str);
 		if (strlen(tmp_str) > CAT_CAT_LEN) {
-			fprintf(stderr, "Sorry, string too long, maximum %d \ characters\n", CAT_CAT_LEN);
+			fprintf(stderr, "Sorry, string too long, maximum %d characters\n", CAT_CAT_LEN);
 			string_ok = 0;
 		}
 	} while (!string_ok);
@@ -406,7 +406,7 @@ static int command_mode(int argc, char *argv[])
 
 	/* outline variable getopt use */
 	extern char *optarg;
-	extern optind, opterr, optopt;
+	extern int optind, opterr, optopt;
 
 	while ((c = getopt(argc, argv, ":i")) != -1) {
 		switch(c) {

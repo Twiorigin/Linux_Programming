@@ -221,7 +221,7 @@ cdc_entry search_cdc_entry(const char *cd_catalog_ptr, int *first_call_ptr)
 	/* If first call *first_call_ptr is not true */
 	if (local_first_call) {
 		local_first_call = 0;
-		*fisrt_call_ptr = 1;
+		*first_call_ptr = 1;
 	}
 	
 	if (*first_call_ptr) {
