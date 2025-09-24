@@ -1,0 +1,2 @@
+Makefile 10 line is fix for me because Makefile can't find -lgdbm_compat & -lgbm library
+add path for -lgdbm_compat and -lgbm

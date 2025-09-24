@@ -156,7 +156,7 @@ void draw_menu(char *options[], int current_highlight, int start_row, int start_
 		txt_ptr = options[current_row];
 		fprintf(cu, "current_row: %d\n", current_row);
 		fprintf(cu, "options: %s\n", options[current_row]);
-		/*txt_ptr++;*/
+		/*txt_ptr++;*/   /* This code not use for this program. If use this code main_menu's first word is not print  */
 		mvprintw(start_row + current_row, start_col, "%s", txt_ptr);
 		fprintf(cu, "txt_ptr: %s\n", txt_ptr);	
 		if(current_row == current_highlight) attroff(A_STANDOUT);
