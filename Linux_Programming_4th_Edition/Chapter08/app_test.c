@@ -24,7 +24,7 @@ int main() {
 	strcpy(ct.track[3], "Sturmisch bewegt");
 	add_tracks(&ct);
 
-	res = find_cds("Symphony" &cd_res);
+	res = find_cds("Symphony", &cd_res);
 	printf("Found %d cds, first has ID %d\n", res, cd_res.cd_id[0]);
 
 	res = get_cd(cd_res.cd_id[0], &cd);
@@ -37,7 +37,7 @@ int main() {
 	printf("Title: %s\n", cd.title);
 	i = 0;
 	while (i < res) {
-		printf("\track %d is %s\n" i, ct.track[i]);
+		printf("\track %d is %s\n", i, ct.track[i]);
 		i++;
 	}
 

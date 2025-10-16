@@ -17,7 +17,7 @@ struct current_tracks_st
 struct cd_search_st
 {
 	int cd_id[MAX_CD_RESULT];
-}
+};
 
 int database_start(char *name, char *password);
 void database_end();
