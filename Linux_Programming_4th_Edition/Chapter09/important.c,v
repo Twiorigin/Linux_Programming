@@ -1,0 +1,28 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2025.11.25.15.22.58;	author parallels;	state Exp;
+branches;
+next	;
+
+
+desc
+@Important Example file
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/*
+	This is important file for project management.
+	This file makes traditional "Hello World" program.
+*/
+@
