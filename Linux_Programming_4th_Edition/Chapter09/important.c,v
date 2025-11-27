@@ -1,18 +1,69 @@
-head	1.1;
+head	1.3;
 access;
 symbols;
-locks; strict;
+locks
+	parallels:1.3; strict;
 comment	@ * @;
 
 
+1.3
+date	2025.11.26.11.48.09;	author parallels;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2025.11.26.11.42.31;	author parallels;	state Exp;
+branches;
+next	1.1;
+
 1.1
-date	2025.11.25.15.22.58;	author parallels;	state Exp;
+date	2025.11.26.11.41.43;	author parallels;	state Exp;
 branches;
 next	;
 
 
 desc
-@Important Example file
+@important example file
+@
+
+
+1.3
+log
+@ADD $RCSfile$ and $Id$.
+@
+text
+@#include <stdlib.h>
+#include <stdio.h>
+
+/*
+	This is important file for this project control.
+	This file makes traditional "Hello World" program.
+	Filename: $RCSfile$
+*/
+
+static char *RCSinfo = "$Id$";
+
+int main() {
+
+	printf("Hello World\n");
+	printf("This is an extra line added later\n"); 
+	printf("This file is under RCS control. Its ID is \n%s\n", RCSinfo);
+	exit(EXIT_SUCCESS);
+}
+@
+
+
+1.2
+log
+@Add printf lines.
+@
+text
+@d1 3
+d7 1
+d10 9
+a18 2
+printf("Hello World\n");
+printf("This is an extra line added later\n"); 
 @
 
 
@@ -21,8 +72,7 @@ log
 @Initial revision
 @
 text
-@/*
-	This is important file for project management.
-	This file makes traditional "Hello World" program.
-*/
+@d4 4
+a7 1
+*/ 
 @
